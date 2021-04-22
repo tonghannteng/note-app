@@ -41,15 +41,22 @@
     <fragment
         android:id="@+id/editNoteFragment"
         android:name="com.tengtonghann.android.mynote.ui.EditNoteFragment"
-        android:label="New Note"
+        android:label="Update Note"
         tools:layout="@layout/fragment_edit_note">
 
         <action
             android:id="@+id/action_editNoteFragment_to_homeFragment"
             app:destination="@+id/homeFragment">
 
+            <argument
+                android:name="note"
+                app:argType="com.tengtonghann.android.mynote.model.Note"
+                app:nullable="true" />
+
         </action>
-
+        <argument
+            android:name="note"
+            app:argType="com.tengtonghann.android.mynote.model.Note"
+            app:nullable="true" />
     </fragment>
-
 </navigation>

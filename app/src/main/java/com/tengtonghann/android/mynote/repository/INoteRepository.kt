@@ -1,7 +1,7 @@
 package com.tengtonghann.android.mynote.repository
 
-import androidx.lifecycle.LiveData
 import com.tengtonghann.android.mynote.model.Note
+import kotlinx.coroutines.flow.Flow
 
 interface INoteRepository {
 
@@ -11,8 +11,8 @@ interface INoteRepository {
 
     suspend fun deleteNote(note: Note)
 
-    fun getAllNotes(): LiveData<List<Note>>
+    suspend fun getAllNotes(): Flow<List<Note>>
 
-    fun searchNote(query: String): LiveData<List<Note>>
+    suspend fun searchNote(query: String): Flow<List<Note>>
 
 }

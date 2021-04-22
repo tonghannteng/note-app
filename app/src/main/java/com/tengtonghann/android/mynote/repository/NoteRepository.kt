@@ -1,9 +1,9 @@
 package com.tengtonghann.android.mynote.repository
 
-import androidx.lifecycle.LiveData
 import com.tengtonghann.android.mynote.db.NoteDao
 import com.tengtonghann.android.mynote.model.Note
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -25,11 +25,11 @@ class NoteRepository @Inject constructor(
         noteDao.deleteNote(note)
     }
 
-    override fun getAllNotes(): LiveData<List<Note>> {
+    override suspend fun getAllNotes(): Flow<List<Note>> {
         return noteDao.getAllNotes()
     }
 
-    override fun searchNote(query: String): LiveData<List<Note>> {
+    override suspend fun searchNote(query: String): Flow<List<Note>> {
         return noteDao.searchNote(query)
     }
 

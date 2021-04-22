@@ -1,10 +1,16 @@
 package com.tengtonghann.android.mynote.adapter
 
+import android.graphics.Color
+import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
+import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.tengtonghann.android.mynote.databinding.NoteLayoutAdapterBinding
 import com.tengtonghann.android.mynote.model.Note
+import com.tengtonghann.android.mynote.ui.HomeFragmentDirections
+import java.util.*
 
 class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
@@ -25,17 +31,39 @@ class NoteAdapter : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
         }
 
+    val differ = AsyncListDiffer(this, differCallback)
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        TODO("Not yet implemented")
+        return NoteViewHolder(
+            NoteLayoutAdapterBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val currentNote = differ.currentList[position]
+
+        holder.binding.tvNoteTitle.text = currentNote.noteTitle
+        holder.binding.tvNoteBody.text = currentNote.noteBody
+        val random = Random()
+        val color = Color.argb(
+            255, random.nextInt(256),
+            random.nextInt(256), random.nextInt(256)
+        )
+
+        holder.binding.ibColor.setBackgroundColor(color)
+        holder.itemView.setOnClickListener { view ->
+            val direction = HomeFragmentDirections
+                .actionHomeFragmentToEditNoteFragment(currentNote)
+            view.findNavController().navigate(direction)
+        }
     }
+
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return differ.currentList.size
     }
-
-
 }
